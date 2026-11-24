@@ -48,7 +48,6 @@
             this.IPAddr.Name = "IPAddr";
             this.IPAddr.Size = new System.Drawing.Size(242, 35);
             this.IPAddr.TabIndex = 0;
-            this.IPAddr.Text = "192.168.1.168";
             // 
             // label1
             // 
@@ -77,7 +76,6 @@
             this.Port.Name = "Port";
             this.Port.Size = new System.Drawing.Size(102, 35);
             this.Port.TabIndex = 2;
-            this.Port.Text = "4000";
             // 
             // label3
             // 
@@ -96,7 +94,6 @@
             this.User.Name = "User";
             this.User.Size = new System.Drawing.Size(102, 35);
             this.User.TabIndex = 4;
-            this.User.Text = "test";
             // 
             // label4
             // 
@@ -115,7 +112,6 @@
             this.Password.Name = "Password";
             this.Password.Size = new System.Drawing.Size(242, 35);
             this.Password.TabIndex = 6;
-            this.Password.Text = "is2010";
             this.Password.UseSystemPasswordChar = true;
             this.Password.TextChanged += new System.EventHandler(this.Password_TextChanged);
             // 
