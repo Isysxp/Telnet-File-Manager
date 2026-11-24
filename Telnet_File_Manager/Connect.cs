@@ -22,9 +22,23 @@ namespace Telnet_File_Manager
 
         public Connect(Form1 frm1,TelnetConnection lclient)
         {
+
             InitializeComponent();
             Frm1 = frm1;
             mclient = lclient;
+            try
+            {
+                TextReader textReader = File.OpenText("config.txt");
+                IPAddr.Text = textReader.ReadLine();
+                Port.Text = textReader.ReadLine();
+                User.Text = textReader.ReadLine();
+                Password.Text = textReader.ReadLine();
+                textReader.Close();
+            }
+            catch
+            {
+                MessageBox.Show("No config file found....");
+            }
         }
 
 
@@ -46,6 +60,22 @@ namespace Telnet_File_Manager
             Cursor.Current = Cursors.Default;
             Frm1.Client = mclient;
             Frm1.directoryToolStripMenuItem_Click(null, null);
+
+            try
+            {
+                TextWriter textWriter = File.CreateText("config.txt");
+                textWriter.WriteLine(IPAddr.Text);
+                 textWriter.WriteLine(Port.Text);
+                 textWriter.WriteLine(User.Text); ;
+                 textWriter.WriteLine(Password.Text);
+                textWriter.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Config file write error....");
+            }
+
+
             this.Close();
         }
 
