@@ -108,6 +108,8 @@ namespace Telnet_File_Manager
                 StringBuilder sb = new StringBuilder();
 
                 Client.WriteLine(cmd);
+                Cursor.Current = Cursors.WaitCursor;
+                System.Windows.Forms.Application.DoEvents();
                 do
                 {
                     line = Client.Read();
@@ -121,7 +123,7 @@ namespace Telnet_File_Manager
                 notePad.StartInfo.FileName = "notepad.exe";
                 notePad.StartInfo.Arguments = fname;
                 notePad.Start();
-
+                Cursor.Current = Cursors.Default;
                 using (notePad)
                 {
                     notePad.WaitForExit();
