@@ -42,7 +42,7 @@ namespace Telnet_File_Manager
             } while (!line.EndsWith(Frm1.Prompt));
             
             Frm1.Cncct = true;
-            Frm1.Text = "File Manager - Connected";
+            Frm1.Text = "File Manager - Connected to " + IPAddr.Text;
             Cursor.Current = Cursors.Default;
             Frm1.Client = mclient;
             Frm1.directoryToolStripMenuItem_Click(null, null);

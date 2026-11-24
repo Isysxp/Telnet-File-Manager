@@ -92,7 +92,7 @@ namespace Telnet_File_Manager
             menuCopy.Click += MenuCopy_Click;
             contextMenu.Items.AddRange(new ToolStripItem[] { menuView, menuDelete, menuNew, menuCopy });
             listBox1.ContextMenuStrip = contextMenu;
-            Prompt = "] ";
+            Prompt = "$ ";
         }
 
         private void MenuView_Click(object sender, EventArgs e)
@@ -447,7 +447,10 @@ namespace Telnet_File_Manager
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Client.Disconnect();
+            if (!(Client == null))
+            {
+                Client.Disconnect();
+            }
             System.Windows.Forms.Application.Exit();
         }
     }
