@@ -3,7 +3,8 @@
 I'm afraid this app fall into the category of 'Look on my works, ye Mighty, and despair'!<br>
 This is a sort of UI built primarily for use with my PiPDP11 running BSD 2.11.
 As I will no doubt be reminded, BSD 2.x never had a UI!<br>
-This is a Visual Studio app written in C#. You will need this devenv to run the app.
+This is a Visual Studio app written in C#. You will need this devenv to run the app<br>
+as Windows binaries are a no no these days.....<br>
 <br>
 Usage:<br>
 1. Click 'Connect' and fill in the boxes. The most critical is the 'Prompt' entry.<br>
@@ -29,5 +30,10 @@ Usage:<br>
       Use view to see what is in the file first.<br><br>
    b. A double click on a file will either open it in Notepad for text files or, open the console and run the file as a binary.<br>
       Then you can use the console to interact with running programme.<br>
-   
-   
+  <br><br>
+  This app can be made to work with most of the old Unices, I have tried with BSD 2.9 and Ultrix 3.1 (they both need a Telnet accessible DL interface).
+  Finally, although I am a vi fan, I'm afraid that even Notepad has its advantages!!!
+  <br><br>
+  Ian Schofield<br>
+  November 2026<br>
+  
