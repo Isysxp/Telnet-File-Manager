@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Text;
 using System.IO;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
@@ -92,9 +93,17 @@ namespace Telnet_File_Manager
             menuCopy.Click += MenuCopy_Click;
             contextMenu.Items.AddRange(new ToolStripItem[] { menuView, menuDelete, menuNew, menuCopy });
             listBox1.ContextMenuStrip = contextMenu;
-            Prompt = "$ ";
         }
 
+        private void WaitForPrompt()
+        {
+            String line = "";
+            do
+            {
+                line = line + Client.Read();
+
+            } while (!line.EndsWith(Prompt));
+        }
         private void MenuView_Click(object sender, EventArgs e)
         {
 
@@ -104,8 +113,9 @@ namespace Telnet_File_Manager
                 String[] fields = fnames.Split(' ');
                 String fname = fields[fields.Length - 1];
                 fname = fname.Replace("\r", "");
-                String line,cmd = "cat " + fname;
+                String line, cmd = "cat " + fname;
                 StringBuilder sb = new StringBuilder();
+                String Hold, Check;
 
                 Client.WriteLine(cmd);
                 Cursor.Current = Cursors.WaitCursor;
@@ -118,7 +128,7 @@ namespace Telnet_File_Manager
                 sb.Replace(cmd, "");
                 sb.RemoveLastLine();
                 File.WriteAllText(fname, sb.ToString());
-
+                Hold = File.ReadAllText(fname);
                 Process notePad = new Process();
                 notePad.StartInfo.FileName = "notepad.exe";
                 notePad.StartInfo.Arguments = fname;
@@ -127,14 +137,22 @@ namespace Telnet_File_Manager
                 using (notePad)
                 {
                     notePad.WaitForExit();
-                    // Retrieve the app's exit code
+                }
+                Check = File.ReadAllText(fname);
+                if (Check != Hold)
+                {
+                    DialogResult Rsl = MessageBox.Show("File has been changed, Do you wish to save it?", "Save changes", MessageBoxButtons.YesNo);
+                    if (Rsl == DialogResult.Yes)
+                    {
+                        SaveFile(fname);
+                    }
                 }
             }
         }
 
         private void MenuDelete_Click(object sender, EventArgs e)
         {
-            String line;
+            String line = "";
             // Show confirmation dialog
             DialogResult result = MessageBox.Show(
                 "Are you sure you want to delete this item?",
@@ -146,25 +164,21 @@ namespace Telnet_File_Manager
             {
                 return;
             }
-
-                if (listBox1.SelectedIndex != -1)
+            if (listBox1.SelectedIndex == -1)
             {
-                String fnames = listBox1.SelectedItem.ToString();
-                String[] fields = fnames.Split(' ');
-                String fname = fields[fields.Length - 1];
-                Client.WriteLine("rm ./" + fname);
-                do
-                {
-                    line = Client.Read();
-
-                } while (!line.EndsWith(Prompt));
-                directoryToolStripMenuItem_Click(null, null);
+                return;
             }
+            String fnames = listBox1.SelectedItem.ToString();
+            String[] fields = fnames.Split(' ');
+            String fname = fields[fields.Length - 1];
+            Client.WriteLine("rm ./" + fname);
+            WaitForPrompt();
+            directoryToolStripMenuItem_Click(null, null);
         }
 
         private void MenuCopy_Click(object sender, EventArgs e)
         {
-            String line="";
+            String line = "";
 
             string input = Interaction.InputBox("Destination file name", "Copy file", "", this.Bounds.Right, this.Bounds.Top);
 
@@ -179,7 +193,7 @@ namespace Telnet_File_Manager
                 String[] fields = fnames.Split(' ');
                 String fname = fields[fields.Length - 1];
                 fname = fname.Replace("\r", "");
-      
+
                 Client.WriteLine("cp " + fname + " " + input);
                 do
                 {
@@ -192,7 +206,7 @@ namespace Telnet_File_Manager
 
         private void MenuNew_Click(object sender, EventArgs e)
         {
-            String line;
+            String line = "";
 
             string input = Interaction.InputBox("New file name", "New file", "", this.Bounds.Right, this.Bounds.Top);
 
@@ -201,16 +215,13 @@ namespace Telnet_File_Manager
                 return;
             }
 
-            if (listBox1.SelectedIndex != -1)
+            Client.WriteLine("touch " + input);
+            do
             {
-                Client.WriteLine("touch " + input);
-                do
-                {
-                    line = Client.Read();
+                line = line + Client.Read();
 
-                } while (!line.EndsWith(Prompt));
-                directoryToolStripMenuItem_Click(null, null);
-            }
+            } while (!line.EndsWith(Prompt));
+            directoryToolStripMenuItem_Click(null, null);
         }
 
         private void connectToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -221,7 +232,7 @@ namespace Telnet_File_Manager
                 return;
             }
             Cncct = false;
-            CForm = new Connect(this,Client);
+            CForm = new Connect(this, Client);
             CForm.Show();
         }
 
@@ -273,6 +284,41 @@ namespace Telnet_File_Manager
             timer1.Enabled = true;
         }
 
+        private void SaveFile(String fname)
+        {
+            String line;
+            byte[] EOF = { 4 };
+
+            Cursor.Current = Cursors.WaitCursor;
+            line = "";
+            Client.WriteLine("stty -echo");
+            do
+            {
+                line = line + Client.Read();
+            } while (!line.EndsWith(Prompt));
+            line = "cat > " + fname;
+            Client.WriteLine(line);
+            Thread.Sleep(100);
+            string fileContent = File.ReadAllText(fname);
+            StringReader reader = new StringReader(fileContent);
+            reader.ReadLine();
+            while ((line = reader.ReadLine()) != null)
+            {
+                Thread.Sleep(100);
+                Client.WriteLine(line);
+            }
+            reader.Close();
+            Thread.Sleep(100);
+            line = Encoding.UTF8.GetString(EOF);
+            Client.Write(line);
+            WaitForPrompt();
+            Client.WriteLine("stty echo");
+            WaitForPrompt();
+            Cursor.Current = Cursors.Default;
+            MessageBox.Show("Write completed....");
+
+        }
+
         private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
 
@@ -289,17 +335,13 @@ namespace Telnet_File_Manager
             String[] fields = fnames.Split(' ');
             String fname = fields[fields.Length - 1];
             fname = fname.Replace("\r", "");
-            String line="", cmd = "cat " + fname;
-            byte[] EOF = { 4 };
+            String line = "", cmd = "cat " + fname;
+
 
             if (fname == "..")
             {
                 Client.WriteLine("cd ..");
-                do
-                {
-                    line = line + Client.Read();
-
-                } while (!line.EndsWith(Prompt));
+                WaitForPrompt();
                 directoryToolStripMenuItem_Click(null, null);
                 return;
             }
@@ -307,16 +349,12 @@ namespace Telnet_File_Manager
             if (fnames.IndexOf("drwx") == 0)
             {
                 Client.WriteLine("cd " + fname);
-                do
-                {
-                    line = Client.Read();
-
-                } while (!line.EndsWith(Prompt));
+                WaitForPrompt();
                 directoryToolStripMenuItem_Click(null, null);
                 return;
             }
 
-            if (fnames.IndexOf("rwxr")>0)
+            if (fnames.IndexOf("rwxr") > 0)
             {
                 cmd = "./" + fname;
                 CheckConsole();
@@ -324,7 +362,7 @@ namespace Telnet_File_Manager
                 Client.WriteLine(cmd);
                 return;
             }
-            if (fname.IndexOf("-rw") == -1)
+            if (fnames.IndexOf("-rw") == -1)
             {
                 return;
             }
@@ -349,37 +387,9 @@ namespace Telnet_File_Manager
                 notePad.WaitForExit();
                 // Retrieve the app's exit code
                 exitCode = notePad.ExitCode;
-                Cursor.Current = Cursors.WaitCursor;
-                line = "";
-                Client.WriteLine("stty -echo");
-                do
-                {
-                    line = line + Client.Read();
-                } while (!line.EndsWith(Prompt));
-                line = "cat > " + fname;
-                Client.WriteLine(line);
-                Thread.Sleep(100);
-                string fileContent = File.ReadAllText(fname);
-                StringReader reader = new StringReader(fileContent);
-                reader.ReadLine();
-                while ((line=reader.ReadLine()) != null)
-                {
-                   Thread.Sleep(100);
-                   Client.WriteLine(line);
-                }
-                reader.Close();
-                Thread.Sleep(100);
-                line = Encoding.UTF8.GetString(EOF);
-                Client.Write(line);
-                line = "";
-                Client.WriteLine("stty echo");
-                do
-                {
-                    line = line + Client.Read();
-                } while (!line.EndsWith(Prompt));
-                Cursor.Current = Cursors.Default;
-                MessageBox.Show("Write completed....");
+                SaveFile(fname);
             }
+
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -387,7 +397,7 @@ namespace Telnet_File_Manager
             String line;
             ConsoleKeyInfo InKey;
 
-            if (GetConsoleWindow()==IntPtr.Zero)
+            if (GetConsoleWindow() == IntPtr.Zero)
             {
                 timer1.Enabled = false;
                 return;
@@ -403,7 +413,8 @@ namespace Telnet_File_Manager
                 if (InKey.KeyChar != 4)
                 {
                     Client.Write(line);
-                } else
+                }
+                else
                 {
                     MessageBox.Show("Use 'Exit' to disconnect");
                 }
