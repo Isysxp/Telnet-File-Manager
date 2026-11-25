@@ -324,6 +324,11 @@ namespace Telnet_File_Manager
                 Client.WriteLine(cmd);
                 return;
             }
+            if (fname.IndexOf("-rw") == -1)
+            {
+                return;
+            }
+
             Client.WriteLine(cmd);
             do
             {
