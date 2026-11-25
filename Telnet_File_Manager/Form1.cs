@@ -345,10 +345,11 @@ namespace Telnet_File_Manager
                 // Retrieve the app's exit code
                 exitCode = notePad.ExitCode;
                 Cursor.Current = Cursors.WaitCursor;
+                line = "";
                 Client.WriteLine("stty -echo");
                 do
                 {
-                    line = Client.Read();
+                    line = line + Client.Read();
                 } while (!line.EndsWith(Prompt));
                 line = "cat > " + fname;
                 Client.WriteLine(line);
@@ -365,10 +366,11 @@ namespace Telnet_File_Manager
                 Thread.Sleep(100);
                 line = Encoding.UTF8.GetString(EOF);
                 Client.Write(line);
+                line = "";
                 Client.WriteLine("stty echo");
                 do
                 {
-                    line = Client.Read();
+                    line = line + Client.Read();
                 } while (!line.EndsWith(Prompt));
                 Cursor.Current = Cursors.Default;
                 MessageBox.Show("Write completed....");
@@ -393,7 +395,13 @@ namespace Telnet_File_Manager
                 {
                     line = line + "\n";
                 }
-                Client.Write(line);
+                if (InKey.KeyChar != 4)
+                {
+                    Client.Write(line);
+                } else
+                {
+                    MessageBox.Show("Use 'Exit' to disconnect");
+                }
                 return;
             }
             line = Client.Read();

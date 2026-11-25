@@ -20,7 +20,7 @@ namespace Telnet_File_Manager
 
         private TelnetConnection mclient;
 
-        public Connect(Form1 frm1,TelnetConnection lclient)
+        public Connect(Form1 frm1, TelnetConnection lclient)
         {
 
             InitializeComponent();
@@ -33,19 +33,22 @@ namespace Telnet_File_Manager
                 Port.Text = textReader.ReadLine();
                 User.Text = textReader.ReadLine();
                 Password.Text = textReader.ReadLine();
+                Prompt.Text = textReader.ReadLine();
                 textReader.Close();
             }
             catch
             {
                 MessageBox.Show("No config file found....");
+                return;
             }
+            Frm1.Prompt = Prompt.Text;
         }
 
 
         private void button1_Click(object sender, EventArgs e)
         {
 
-            String line="";
+            String line = "";
             timer1.Enabled = true;
             Cursor.Current = Cursors.WaitCursor;
             mclient = new TelnetConnection(IPAddr.Text, int.Parse(Port.Text));
@@ -54,7 +57,7 @@ namespace Telnet_File_Manager
             {
                 line = line + mclient.Read();
             } while (!line.EndsWith(Frm1.Prompt));
-            
+
             Frm1.Cncct = true;
             Frm1.Text = "File Manager - Connected to " + IPAddr.Text;
             Cursor.Current = Cursors.Default;
@@ -65,9 +68,10 @@ namespace Telnet_File_Manager
             {
                 TextWriter textWriter = File.CreateText("config.txt");
                 textWriter.WriteLine(IPAddr.Text);
-                 textWriter.WriteLine(Port.Text);
-                 textWriter.WriteLine(User.Text); ;
-                 textWriter.WriteLine(Password.Text);
+                textWriter.WriteLine(Port.Text);
+                textWriter.WriteLine(User.Text); ;
+                textWriter.WriteLine(Password.Text);
+                textWriter.WriteLine(Prompt.Text);
                 textWriter.Close();
             }
             catch

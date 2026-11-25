@@ -89,15 +89,15 @@
             // directoryToolStripMenuItem
             // 
             this.directoryToolStripMenuItem.Name = "directoryToolStripMenuItem";
-            this.directoryToolStripMenuItem.Size = new System.Drawing.Size(248, 46);
+            this.directoryToolStripMenuItem.Size = new System.Drawing.Size(287, 46);
             this.directoryToolStripMenuItem.Text = "Directory";
             this.directoryToolStripMenuItem.Click += new System.EventHandler(this.directoryToolStripMenuItem_Click);
             // 
             // runToolStripMenuItem
             // 
             this.runToolStripMenuItem.Name = "runToolStripMenuItem";
-            this.runToolStripMenuItem.Size = new System.Drawing.Size(248, 46);
-            this.runToolStripMenuItem.Text = "Command";
+            this.runToolStripMenuItem.Size = new System.Drawing.Size(287, 46);
+            this.runToolStripMenuItem.Text = "Open console";
             this.runToolStripMenuItem.Click += new System.EventHandler(this.runToolStripMenuItem_Click);
             // 
             // listBox1

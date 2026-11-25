@@ -39,6 +39,8 @@
             this.Password = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.label5 = new System.Windows.Forms.Label();
+            this.Prompt = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // IPAddr
@@ -118,7 +120,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(142, 308);
+            this.button1.Location = new System.Drawing.Point(135, 372);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(231, 54);
             this.button1.TabIndex = 8;
@@ -131,11 +133,31 @@
             this.timer1.Interval = 5000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(46, 314);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(91, 29);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Prompt";
+            // 
+            // Prompt
+            // 
+            this.Prompt.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Prompt.Location = new System.Drawing.Point(238, 314);
+            this.Prompt.Name = "Prompt";
+            this.Prompt.Size = new System.Drawing.Size(102, 35);
+            this.Prompt.TabIndex = 9;
+            // 
             // Connect
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(508, 390);
+            this.ClientSize = new System.Drawing.Size(508, 483);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.Prompt);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.Password);
@@ -165,5 +187,7 @@
         private System.Windows.Forms.TextBox Password;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox Prompt;
     }
 }
