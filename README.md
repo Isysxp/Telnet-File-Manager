@@ -2,8 +2,10 @@
 <br>
 I'm afraid this app fall into the category of 'Look on my works, ye Mighty, and despair'!<br>
 This is a sort of UI built primarily for use with my PiPDP11 running BSD 2.11.
-As I will no doubt be reminded, BSD 2.x never had a UI!
-Usage:
+As I will no doubt be reminded, BSD 2.x never had a UI!<br>
+This is a Visual Studio app written in C#. You will need this devenv to run the app.
+<br>
+Usage:<br>
 1. Click 'Connect' and fill in the boxes. The most critical is the 'Prompt' entry.<br>
    This is used to determine if the remote system is ready for more input.<br>
    It is a good idea to telnet into your system to see what this is.<br>
