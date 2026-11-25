@@ -132,10 +132,6 @@ namespace VT105.MinimalisticTelnet
             if (!tcpSocket.Connected)
                 return;
             tcpSocket.GetStream().WriteByte((byte)4);
-            do
-            {
-                line = line + Read();
-            } while (line.IndexOf("^D")==-1);
             tcpSocket.GetStream().Close();
         }
         public bool IsConnected
