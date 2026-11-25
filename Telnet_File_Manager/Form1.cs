@@ -141,10 +141,11 @@ namespace Telnet_File_Manager
                 Check = File.ReadAllText(fname);
                 if (Check != Hold)
                 {
-                    DialogResult Rsl = MessageBox.Show("File has been changed, Do you wish to save it?", "Save changes", MessageBoxButtons.YesNo);
+                    DialogResult Rsl = MessageBox.Show(this,"File has been changed, Do you wish to save it?", "Save changes", MessageBoxButtons.YesNo);
                     if (Rsl == DialogResult.Yes)
                     {
                         SaveFile(fname);
+                        directoryToolStripMenuItem_Click(null, null);
                     }
                 }
             }
