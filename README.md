@@ -1,6 +1,6 @@
 # Telnet File Manager
 <br>
-I'm afraid this app fall into the category of 'Look on my works, ye Mighty, and despair'!<br>
+I'm afraid this app falls into the category of 'Look on my works, ye Mighty, and despair'!<br>
 This is a sort of UI built primarily for use with my PiPDP11 running BSD 2.11.
 As I will no doubt be reminded, BSD 2.x never had a UI!<br>
 This is a Visual Studio app written in C#. You will need this devenv to run the app<br>
@@ -17,7 +17,8 @@ Usage:<br>
    Click 'Connect'.<br>
    If it is your lucky day, the list box should fill with the contents of the user's root directory.<br>
    NB the Connect process will save your settings in the config file for the next run.<br>
-   NNB the first run of this app will show a message that there is no config file. Just click 'OK' and continue.
+   NNB the first run of this app will show a message that there is no config file. Just click 'OK' and continue.<br><br>
+   **At present, this app will not connect correctly to the BSD2.11 instance, only the DZ line interface is working.**
 <br>
 <br>
 2. The rest of the menu items should be fairly obvious. Needless to say, you can (if you must) open a console window<br>
