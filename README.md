@@ -16,7 +16,8 @@ Usage:<br>
    The current text is set as above and matches to BSD 2.11 distro I have from: https://github.com/chasecovello/211bsd-pidp11<br>
    Click 'Connect'.<br>
    If it is your lucky day, the list box should fill with the contents of the user's root directory.<br>
-   NB the Connect process will save your settings in the config file for the next run.
+   NB the Connect process will save your settings in the config file for the next run.<br>
+   NNB the first run of this app will show a message that there is no config file. Just click 'OK' and continue.
 <br>
 <br>
 2. The rest of the menu items should be fairly obvious. Needless to say, you can (if you must) open a console window<br>
@@ -29,10 +30,11 @@ Usage:<br>
       script files which may be executable. As we all know, distinguishing between binaries and executable scripts is a bit of an art.<br>
       Use view to see what is in the file first.<br><br>
    b. A double click on a file will either open it in Notepad for text files or, open the console and run the file as a binary.<br>
-      Then you can use the console to interact with running programme. Similarly, executable scripts will run in the console as well.<br>
+      Then you can use the console to interact with running programme. Similarly, executable scripts will be run in the console as well.<br>
   <br><br>
   This app can be made to work with most of the old Unices, I have tried with BSD 2.9 and Ultrix 3.1 (they both need a Telnet accessible DL interface).
-  Finally, although I am a vi fan, I'm afraid that even Notepad has its advantages!!!
+  Finally, although I am a vi fan, I'm afraid that even Notepad has its advantages!!!<br><br>
+  This app works via the good old expect/send protocol. This is not entirely reliable ... patience is a virtue!!!
   <br><br>
   Ian Schofield<br>
   November 2026<br>
