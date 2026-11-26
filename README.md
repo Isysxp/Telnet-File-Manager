@@ -33,7 +33,8 @@ Usage:<br>
       Then you can use the console to interact with running programme. Similarly, executable scripts will be run in the console as well.<br>
   <br><br>
   This app can be made to work with most of the old Unices, I have tried with BSD 2.9 and Ultrix 3.1 (they both need a Telnet accessible DL interface).
-  Finally, although I am a vi fan, I'm afraid that even Notepad has its advantages!!!
+  Finally, although I am a vi fan, I'm afraid that even Notepad has its advantages!!!<br><br>
+  This app works via the good old expect/send protocol. This is not entirely reliable ... patience is a virtue!!!
   <br><br>
   Ian Schofield<br>
   November 2026<br>
