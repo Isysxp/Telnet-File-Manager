@@ -287,9 +287,10 @@ namespace Telnet_File_Manager
         {
             String line;
             byte[] EOF = { 4 };
+            var msgForm = new WaitForSave();
 
-            this.UseWaitCursor = true;
             line = "";
+            msgForm.Show();
             Client.WriteLine("stty -echo");
             do
             {
@@ -304,6 +305,7 @@ namespace Telnet_File_Manager
             while ((line = reader.ReadLine()) != null)
             {
                 Thread.Sleep(100);
+                System.Windows.Forms.Application.DoEvents();
                 Client.WriteLine(line);
             }
             reader.Close();
@@ -313,8 +315,7 @@ namespace Telnet_File_Manager
             WaitForPrompt();
             Client.WriteLine("stty echo");
             WaitForPrompt();
-            this.UseWaitCursor = false;
-            MessageBox.Show("Write completed....");
+            msgForm.Close();
 
         }
 
