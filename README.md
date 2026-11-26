@@ -17,7 +17,8 @@ Usage:<br>
    Click 'Connect'.<br>
    If it is your lucky day, the list box should fill with the contents of the user's root directory.<br>
    NB the Connect process will save your settings in the config file for the next run.<br>
-   NNB the first run of this app will show a message that there is no config file. Just click 'OK' and continue.
+   NNB the first run of this app will show a message that there is no config file. Just click 'OK' and continue.<br><br>
+   **At present, this app will no connect correctly to the BSD2.11 instance, only the DZ line interface is working.**
 <br>
 <br>
 2. The rest of the menu items should be fairly obvious. Needless to say, you can (if you must) open a console window<br>
