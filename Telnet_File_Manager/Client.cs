@@ -31,7 +31,6 @@ namespace VT105.MinimalisticTelnet
     public class TelnetConnection
     {
         private TcpClient tcpSocket;
-        private int TimeOutMs = 10;
 
         public void NoKeep(TcpClient tcl)
         {
@@ -73,7 +72,7 @@ namespace VT105.MinimalisticTelnet
             do
             {
                 s = s + Read();
-            } while (!s.TrimEnd().EndsWith("login:"));
+            } while (!s.EndsWith("login: "));
             WriteLine(Username);
             s = "";
             do
@@ -84,7 +83,7 @@ namespace VT105.MinimalisticTelnet
                     WriteLine("");
                     return s;
                 }
-            } while (!s.TrimEnd().EndsWith("Password:"));
+            } while (!s.EndsWith("Password:"));
             WriteLine(Password);
             s += Read();
             return s;

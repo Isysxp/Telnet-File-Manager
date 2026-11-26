@@ -253,7 +253,7 @@ namespace Telnet_File_Manager
             }
 
             listBox1.Items.Clear();
-            Client.WriteLine(" ls -l");
+            Client.WriteLine(" ls -la");
             line = " ";
             do
             {
@@ -304,7 +304,7 @@ namespace Telnet_File_Manager
             reader.ReadLine();
             while ((line = reader.ReadLine()) != null)
             {
-                Thread.Sleep(100);
+                Thread.Sleep(50);
                 System.Windows.Forms.Application.DoEvents();
                 Client.WriteLine(line);
             }
