@@ -1,6 +1,6 @@
 # Telnet File Manager
 <br>
-I'm afraid this app fall into the category of 'Look on my works, ye Mighty, and despair'!<br>
+I'm afraid this app falls into the category of 'Look on my works, ye Mighty, and despair'!<br>
 This is a sort of UI built primarily for use with my PiPDP11 running BSD 2.11.
 As I will no doubt be reminded, BSD 2.x never had a UI!<br>
 This is a Visual Studio app written in C#. You will need this devenv to run the app<br>
