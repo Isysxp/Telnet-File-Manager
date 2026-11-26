@@ -118,8 +118,7 @@ namespace Telnet_File_Manager
                 String Hold, Check;
 
                 Client.WriteLine(cmd);
-                Cursor.Current = Cursors.WaitCursor;
-                System.Windows.Forms.Application.DoEvents();
+                this.UseWaitCursor = true;
                 do
                 {
                     line = Client.Read();
@@ -132,8 +131,8 @@ namespace Telnet_File_Manager
                 Process notePad = new Process();
                 notePad.StartInfo.FileName = "notepad.exe";
                 notePad.StartInfo.Arguments = fname;
+                this.UseWaitCursor = false;
                 notePad.Start();
-                Cursor.Current = Cursors.Default;
                 using (notePad)
                 {
                     notePad.WaitForExit();
@@ -256,7 +255,7 @@ namespace Telnet_File_Manager
 
             listBox1.Items.Clear();
             Client.WriteLine(" ls -l");
-            line = "";
+            line = " ";
             do
             {
                 line = Client.Read();
@@ -290,7 +289,7 @@ namespace Telnet_File_Manager
             String line;
             byte[] EOF = { 4 };
 
-            Cursor.Current = Cursors.WaitCursor;
+            this.UseWaitCursor = true;
             line = "";
             Client.WriteLine("stty -echo");
             do
@@ -315,7 +314,7 @@ namespace Telnet_File_Manager
             WaitForPrompt();
             Client.WriteLine("stty echo");
             WaitForPrompt();
-            Cursor.Current = Cursors.Default;
+            this.UseWaitCursor = false;
             MessageBox.Show("Write completed....");
 
         }

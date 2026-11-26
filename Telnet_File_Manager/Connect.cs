@@ -39,30 +39,39 @@ namespace Telnet_File_Manager
             catch
             {
                 MessageBox.Show("No config file found....");
-                return;
             }
-            Frm1.Prompt = Prompt.Text;
         }
 
 
         private void button1_Click(object sender, EventArgs e)
         {
 
-            String line = "";
+            String line = " ";
             timer1.Enabled = true;
             Cursor.Current = Cursors.WaitCursor;
-            mclient = new TelnetConnection(IPAddr.Text, int.Parse(Port.Text));
+            try {
+                mclient = new TelnetConnection(IPAddr.Text, int.Parse(Port.Text));
+            }
+            catch {
+                MessageBox.Show("Cannot connect to remote system");
+                return;
+            }
+
             mclient.Login(User.Text, Password.Text, 100);
             do
             {
                 line = line + mclient.Read();
-            } while (!line.EndsWith(Frm1.Prompt));
+                if (line.EndsWith("login: "))
+                {
+                    MessageBox.Show("Login error .. Invalid credentials");
+                    return;
+                }
+            } while (!line.EndsWith(Prompt.Text));
 
             Frm1.Cncct = true;
             Frm1.Text = "File Manager - Connected to " + IPAddr.Text;
             Cursor.Current = Cursors.Default;
             Frm1.Client = mclient;
-            Frm1.directoryToolStripMenuItem_Click(null, null);
 
             try
             {
@@ -78,21 +87,18 @@ namespace Telnet_File_Manager
             {
                 MessageBox.Show("Config file write error....");
             }
-
-
+            Frm1.Prompt = Prompt.Text;
+            Frm1.directoryToolStripMenuItem_Click(null, null);
             this.Close();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            return;
             Cursor.Current = Cursors.Default;
             MessageBox.Show("Login failed.....");
             this.Close();
         }
 
-        private void Password_TextChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }

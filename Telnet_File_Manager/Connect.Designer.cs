@@ -115,7 +115,6 @@
             this.Password.Size = new System.Drawing.Size(242, 35);
             this.Password.TabIndex = 6;
             this.Password.UseSystemPasswordChar = true;
-            this.Password.TextChanged += new System.EventHandler(this.Password_TextChanged);
             // 
             // button1
             // 
@@ -123,7 +122,7 @@
             this.button1.Location = new System.Drawing.Point(135, 372);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(231, 54);
-            this.button1.TabIndex = 8;
+            this.button1.TabIndex = 10;
             this.button1.Text = "CONNECT";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -149,7 +148,7 @@
             this.Prompt.Location = new System.Drawing.Point(238, 314);
             this.Prompt.Name = "Prompt";
             this.Prompt.Size = new System.Drawing.Size(102, 35);
-            this.Prompt.TabIndex = 9;
+            this.Prompt.TabIndex = 8;
             // 
             // Connect
             // 
