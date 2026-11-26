@@ -67,11 +67,9 @@ namespace VT105.MinimalisticTelnet
 
         }
 
-        public string Login(string Username, string Password, int LoginTimeOutMs)
+        public string Login(string Username, string Password, String Prompt)
         {
-            int oldTimeOutMs = TimeOutMs;
             string s="";
-            TimeOutMs = LoginTimeOutMs;
             do
             {
                 s = s + Read();
@@ -81,10 +79,14 @@ namespace VT105.MinimalisticTelnet
             do
             {
                 s = s + Read();
+                if (s.EndsWith(Prompt))
+                {
+                    WriteLine("");
+                    return s;
+                }
             } while (!s.TrimEnd().EndsWith("Password:"));
             WriteLine(Password);
             s += Read();
-            TimeOutMs = oldTimeOutMs;
             return s;
         }
 
@@ -127,7 +129,6 @@ namespace VT105.MinimalisticTelnet
 
         public void Disconnect()
         {
-            String line = "";
 
             if (!tcpSocket.Connected)
                 return;

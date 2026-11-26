@@ -57,7 +57,7 @@ namespace Telnet_File_Manager
                 return;
             }
 
-            mclient.Login(User.Text, Password.Text, 100);
+            mclient.Login(User.Text, Password.Text, Prompt.Text);
             do
             {
                 line = line + mclient.Read();

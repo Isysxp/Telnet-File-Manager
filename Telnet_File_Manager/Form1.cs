@@ -152,7 +152,6 @@ namespace Telnet_File_Manager
 
         private void MenuDelete_Click(object sender, EventArgs e)
         {
-            String line = "";
             // Show confirmation dialog
             DialogResult result = MessageBox.Show(
                 "Are you sure you want to delete this item?",
