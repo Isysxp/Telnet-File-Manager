@@ -47,7 +47,6 @@ namespace Telnet_File_Manager
         {
 
             String line = " ";
-            timer1.Enabled = true;
             Cursor.Current = Cursors.WaitCursor;
             try {
                 mclient = new TelnetConnection(IPAddr.Text, int.Parse(Port.Text));
@@ -56,7 +55,7 @@ namespace Telnet_File_Manager
                 MessageBox.Show("Cannot connect to remote system");
                 return;
             }
-
+            timer1.Enabled = true;
             mclient.Login(User.Text, Password.Text, Prompt.Text);
             do
             {
@@ -94,10 +93,11 @@ namespace Telnet_File_Manager
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            return;
             Cursor.Current = Cursors.Default;
-            MessageBox.Show("Login failed.....");
-            this.Close();
+            //MessageBox.Show("Login failed.....");
+            mclient.WriteLine("");
+            timer1.Enabled = false;
+
         }
 
     }

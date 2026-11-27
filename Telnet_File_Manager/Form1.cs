@@ -123,7 +123,7 @@ namespace Telnet_File_Manager
                 {
                     line = Client.Read();
                     sb.Append(line);
-                } while (!line.EndsWith(Prompt));
+                } while (!sb.ToString().EndsWith(Prompt));
                 sb.Replace(cmd, "");
                 sb.RemoveLastLine();
                 File.WriteAllText(fname, sb.ToString());

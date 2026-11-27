@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 // This module is based upon Jon Sagara's rebuild of Tom Janssen's Minimalistic Telnet. See: https://github.com/jonsagara/MinimalisticTelnet
@@ -72,18 +73,19 @@ namespace VT105.MinimalisticTelnet
             do
             {
                 s = s + Read();
+                if (s.EndsWith("Password:"))
+                {
+                    WriteLine("");
+                    Thread.Sleep(2000);
+                }
             } while (!s.EndsWith("login: "));
             WriteLine(Username);
             s = "";
             do
             {
                 s = s + Read();
-                if (s.EndsWith(Prompt))
-                {
-                    WriteLine("");
-                    return s;
-                }
-            } while (!s.EndsWith("Password:"));
+
+            } while (!(s.TrimEnd()).EndsWith("Password:"));
             WriteLine(Password);
             s += Read();
             return s;
@@ -91,7 +93,7 @@ namespace VT105.MinimalisticTelnet
 
         public void WriteLine(string cmd)
         {
-            Write(cmd + Constants.vbCrLf);
+            Write(cmd + Constants.vbCr);
         }
 
         public void Write(string cmd)
